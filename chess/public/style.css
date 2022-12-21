@@ -1,0 +1,24 @@
+/* style.css */
+
+#board {
+    width: 400px;
+    margin: 0 auto;
+  }
+  
+  #controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  #moveForm {
+    display: flex;
+    align-items: center;
+  }
+  
+  #moveInput {
+    width: 200px;
+    margin-right: 10px;
+  }
+  

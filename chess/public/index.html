@@ -1,0 +1,25 @@
+<!-- index.html -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chess</title>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css">
+  </head>
+  <body>
+    <div id="board"></div>
+    <div id="controls">
+      <button id="newGameButton">New Game</button>
+      <form id="moveForm">
+        <input type="text" id="moveInput" placeholder="Enter your move">
+        <button type="submit">Make Move</button>
+      </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.2/chess.min.js"></script>
+    <script src="https://rawgit.com/jbkunst/chessboardjs-themes/master/chessboardjs-themes.js"></script>
+    <script src="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.js"></script>
+    <script src="/script.js"></script>
+  </body>
+</html>

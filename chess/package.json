@@ -1,0 +1,16 @@
+{
+  "name": "chess",
+  "version": "0.0.0",
+  "devDependencies": {
+    "@cloudflare/kv-asset-handler": "^0.3.0",
+    "wrangler": "2.6.2"
+  },
+  "private": true,
+  "scripts": {
+    "start": "wrangler dev",
+    "deploy": "wrangler publish"
+  },
+  "dependencies": {
+    "js-chess-engine": "^1.0.2"
+  }
+}
