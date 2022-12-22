@@ -4,6 +4,8 @@ const assetManifest = JSON.parse(manifestJSON)
 
 import * as Chess from 'js-chess-engine';
 
+const KV_TTL = 86400;
+
 async function handleRequest(request, env, ctx) {
   const url = new URL(request.url);
   const params = new URLSearchParams(url.search);
@@ -57,7 +59,12 @@ async function newGame(env) {
   // Store the game state in the Key Value database
   try {
     const engineState = engine.exportJson();
-    await env.chessState.put(gameId, JSON.stringify({ fen, engineState }));
+    await env.chessState.put(
+      gameId,
+      JSON.stringify({ fen, engineState }), 
+      { expirationTtl: KV_TTL } 
+    );
+
     return new Response(gameId, { status: 200 });
   } catch (error) {
     console.log(error)
@@ -100,7 +107,12 @@ async function makeMove(gameId, from, to, env) {
   // Update the game state in the Key Value database
   try {
     const engineState = engine.exportJson();
-    await env.chessState.put(gameId, JSON.stringify({ fen: updatedFen, engineState }));
+
+    await env.chessState.put(
+      gameId,
+      JSON.stringify({ fen: updatedFen, engineState }), 
+      { expirationTtl: KV_TTL } 
+    );
 
     /**
      * Convert to lower case correct notation so frontend chess engine
@@ -126,3 +138,9 @@ export default {
     )
   }
 }
+
+/**
+ * Key purging
+ */
+
+
