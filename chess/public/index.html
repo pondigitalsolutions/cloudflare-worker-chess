@@ -11,11 +11,14 @@
     <div id="board"></div>
     <div id="controls">
       <button id="newGameButton">New Game</button>
-      <form id="moveForm">
-        <input type="text" id="moveInput" placeholder="Enter your move">
-        <button type="submit">Make Move</button>
+      <form id="gameForm">
+        <label for="gameIdInput">Enter game ID:</label><br>
+        <input type="text" id="gameIdInput" name="gameId"><br>
+        <button type="submit" id="loadGameButton">Load Game</button>
       </form>
+      <a id="gameIdDisplay" href="#"></a> 
     </div>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.2/chess.min.js"></script>
     <script src="https://rawgit.com/jbkunst/chessboardjs-themes/master/chessboardjs-themes.js"></script>

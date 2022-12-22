@@ -34,6 +34,11 @@ async function handleRequest(request, env, ctx) {
 async function getState(gameId, env) {
   try {
     const game = JSON.parse(await env.chessState.get(gameId));
+
+    if (game === null) {
+      return new Response('Invalid game ID', { status: 404 });
+    }
+
     return new Response(JSON.stringify(game), { status: 200 });
   } catch (error) {
     return new Response('Invalid game ID', { status: 400 });
@@ -97,7 +102,17 @@ async function makeMove(gameId, from, to, env) {
     const engineState = engine.exportJson();
     await env.chessState.put(gameId, JSON.stringify({ fen: updatedFen, engineState }));
 
-    return new Response({ from: Object.keys(lastMove)[0], to: Object.values(lastMove)[0]}), { status: 200 });
+    /**
+     * Convert to lower case correct notation so frontend chess engine
+     * gets valid moves
+     */
+    return new Response(
+      JSON.stringify({ 
+        from: Object.keys(lastMove)[0].toLowerCase(), 
+        to: Object.values(lastMove)[0].toLowerCase()
+      }), 
+      { status: 200 }
+    );
   } catch (error) {
     console.log(error)
     return new Response('Error updating game', { status: 500 });
