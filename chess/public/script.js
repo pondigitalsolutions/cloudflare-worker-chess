@@ -36,7 +36,7 @@ async function newGame() {
 
   const response = await fetch('/new');
   if (response.ok) {
-    const gameId = await response.text();
+    const gameId = sanitizeGameId(await response.text());
     localStorage.setItem('gameId', gameId);
     const stateResponse = await fetch(`/state?gameId=${gameId}`);
     if (stateResponse.ok) {
@@ -116,7 +116,9 @@ async function loadGame(event) {
   const gameIdInput = document.getElementById('gameIdInput');
   const currentUrl = new URL(window.location.href);
   
-  const gameId = gameIdInput.value || currentUrl.searchParams.get('gameId');;
+  const gameId = sanitizeGameId(
+    gameIdInput.value || currentUrl.searchParams.get('gameId')
+  );
 
   if (!gameId) {
     return
@@ -148,6 +150,20 @@ async function loadGame(event) {
     console.error(`Error getting game state: ${stateResponse.statusText}`);
   }
 }
+
+function sanitizeGameId(gameId) {
+  // Parse the gameId parameter as a number
+  const parsedGameId = Number(gameId);
+
+  // Check that the parsed gameId is a finite number
+  if (Number.isFinite(parsedGameId)) {
+    return parsedGameId;
+  } else {
+    // If the parsed gameId is not a finite number, return null
+    return null;
+  }
+}
+
 
 newGameButton.addEventListener('click', newGame);
 loadGameButton.addEventListener('click', loadGame);
