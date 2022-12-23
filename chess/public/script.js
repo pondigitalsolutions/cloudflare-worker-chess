@@ -111,7 +111,7 @@ function makeMove(from, to) {
     /** 
      * And revert back to original position
      */
-    game.fen(prevFen)
+    game.load(prevFen)
     board.position(prevFen, true);
 
     console.error(`Error making move: ${response.statusText}`);
