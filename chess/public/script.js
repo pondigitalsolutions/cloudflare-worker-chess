@@ -75,10 +75,15 @@ function makeMove(from, to) {
     return false;
   }
 
+  /**
+   * Store the current fen so we can use it later
+   * when the computer move fails to revert
+   */
+  const prevFen = game.fen();
+
   const move = game.move({ from, to });
   if (move === null) {
     console.error('Invalid move');
-
     return false;
   }
 
@@ -88,22 +93,25 @@ function makeMove(from, to) {
    */
   (async () => {
     const response = await fetch(`/move?gameId=${gameId}&from=${from}&to=${to}`);
-    
-    if (response.ok && response.status == 200) {
+  
+    if (response.ok && response.status === 200) {
       const computerMove = await response.json();
       console.log(computerMove);
   
       game.move(computerMove);
       
+      /**
+       * Update the board
+       */
       board.position(game.fen(), true);
   
       return true;
     } 
     
     /** 
-     * And reset
+     * And revert back to original position
      */
-    board.position(game.fen(), true);
+    board.position(prevFen, true);
 
     console.error(`Error making move: ${response.statusText}`);
   })();
