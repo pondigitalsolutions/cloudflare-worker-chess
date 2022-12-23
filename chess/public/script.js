@@ -94,7 +94,7 @@ function makeMove(from, to) {
   (async () => {
     const response = await fetch(`/move?gameId=${gameId}&from=${from}&to=${to}`);
   
-    if (response.ok && response.status === 200) {
+    if (response.ok && response.status === 300) {
       const computerMove = await response.json();
       console.log(computerMove);
   
@@ -111,6 +111,7 @@ function makeMove(from, to) {
     /** 
      * And revert back to original position
      */
+    game.fen(prevFen)
     board.position(prevFen, true);
 
     console.error(`Error making move: ${response.statusText}`);
