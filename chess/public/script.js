@@ -89,7 +89,7 @@ function makeMove(from, to) {
   (async () => {
     const response = await fetch(`/move?gameId=${gameId}&from=${from}&to=${to}`);
     
-    if (response.ok) {
+    if (response.ok && response.status == 200) {
       const computerMove = await response.json();
       console.log(computerMove);
   
